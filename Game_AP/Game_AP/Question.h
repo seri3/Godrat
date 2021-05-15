@@ -1,12 +1,11 @@
 #pragma once
+#include"Tools.h"
 using namespace std;
 #include<iostream>
-class Question
+class Question:public Tools
 {
 private :
 	string question;
-	void dot_remover();
-	void dash_remover();
 public:
 	Question(int);
 };
