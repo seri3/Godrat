@@ -77,7 +77,7 @@ bool States::reachedZero(){
 		return true;
 	return false;
 }
-void States::Printer(int progress, int barWidth = 15)
+void States::Printer(int progress, int barWidth)
 {
     cout << "[";
     for (int i = 0; i < barWidth; ++i)
