@@ -1,6 +1,7 @@
 #include "Question.h"
 #include"Answer.h"
 #include "States.h"
+#include "attack.h"
 #include <iostream>
 #include<ctime>
 #include<cstdlib>
@@ -19,4 +20,6 @@ int main()
 	kingdom.readStatesOfAnswer(indexs[index], selected_option);
 	kingdom.currentStatementPrint();
 	indexs.erase(indexs.begin() + index);	
+	attack fight;
+	fight.print();
 }
