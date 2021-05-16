@@ -1,5 +1,7 @@
+#ifndef COUNTRY_H
+#define COUNTRY_H
 #include <iostream>
-#include "attack.h"
+// #include "attack.h"
 using namespace std;
 /**
  * @file country.h
@@ -7,10 +9,10 @@ using namespace std;
  * @brief it is related to attack class and this class specifies the changes of states
  * 
  */
-class attack;
+// class attack;
 class country
 {
-friend attack;
+friend class attack;
 private:
     string name;
     int money_ch;
@@ -20,3 +22,5 @@ private:
 public:
     country(string , int , int , int , int );
 };
+
+#endif
