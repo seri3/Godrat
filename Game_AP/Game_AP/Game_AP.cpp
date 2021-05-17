@@ -22,4 +22,8 @@ int main()
 	indexs.erase(indexs.begin() + index);	
 	attack fight;
 	fight.print();
+	int choose;
+	cin >> choose;
+	fight.after_attack(choose , kingdom);
+	kingdom.currentStatementPrint();
 }

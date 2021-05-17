@@ -18,12 +18,11 @@ using namespace std;
 class attack
 {
 private:
-    // vector <country> countries;
     country countries[2];
 public:
     attack();
-    void print();
-    void after_attack(int index , States &state);
+    void print() const ;
+    void after_attack(int index , States &state) const;
  
 };
 

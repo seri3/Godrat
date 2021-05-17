@@ -16,7 +16,7 @@ friend class attack;
 private:
     string name;
     int money_ch;
-    int stisfaction_ch;
+    int satisfaction_ch;
     int religion_ch;
     int army_ch;
 public:
