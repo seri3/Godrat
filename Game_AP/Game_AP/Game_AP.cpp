@@ -1,7 +1,7 @@
 #include "Question.h"
 #include"Answer.h"
 #include "States.h"
-#include "attack.h"
+#include "Attack.h"
 #include <iostream>
 #include<ctime>
 #include<cstdlib>
@@ -11,6 +11,7 @@ int main()
 {
 	vector<int> indexs{ 0,1,2,3 };
 	srand(time(NULL));
+	//finding random index for random question in the list
 	int index = rand() % indexs.size();
 	Question q(indexs[index]);
 	Answer ans(indexs[index]);
@@ -20,7 +21,7 @@ int main()
 	kingdom.readStatesOfAnswer(indexs[index], selected_option);
 	kingdom.currentStatementPrint();
 	indexs.erase(indexs.begin() + index);	
-	attack fight;
+	Attack fight;
 	fight.print();
 	int choose;
 	cin >> choose;

@@ -4,23 +4,21 @@
 #define ATTACK_H
 #include "States.h"
 #include <vector>
-
-#include "country.h"
-/**
- * @file attack.h
- * @brief it is for attack part in the game
- * 
- */
-
+#include "Country.h"
 
 using namespace std;
-// class country;
-class attack
+// class Country;
+/**
+ * @file Attack.h
+ * @brief it is for Attack part in the game and it contains list of countries
+ * 
+ */
+class Attack
 {
 private:
-    country countries[2];
+    Country countries[2];
 public:
-    attack();
+    Attack();
     void print() const ;
     void after_attack(int index , States &state) const;
  

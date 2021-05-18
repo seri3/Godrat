@@ -1,18 +1,17 @@
 #ifndef COUNTRY_H
 #define COUNTRY_H
 #include <iostream>
-// #include "attack.h"
+// #include "Attack.h"
 using namespace std;
 /**
- * @file country.h
+ * @file Country.h
  * 
- * @brief it is related to attack class and this class specifies the changes of states
+ * @brief it is related to Attack class and this class specifies the changes of states
  * 
  */
-// class attack;
-class country
+class Country
 {
-friend class attack;
+friend class Attack;
 private:
     string name;
     int money_ch;
@@ -20,7 +19,7 @@ private:
     int religion_ch;
     int army_ch;
 public:
-    country(string , int , int , int , int );
+    Country(string , int , int , int , int );
 };
 
 #endif

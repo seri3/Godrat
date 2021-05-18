@@ -1,6 +1,6 @@
-#include "country.h"
+#include "Country.h"
 
-country::country(string name, int money_ch, int satisfaction_ch, int religion_ch, int army_ch)
+Country::Country(string name, int money_ch, int satisfaction_ch, int religion_ch, int army_ch)
 {
     this->name = name;
     this->money_ch = money_ch;
