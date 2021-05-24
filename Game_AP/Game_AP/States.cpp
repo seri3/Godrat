@@ -103,3 +103,25 @@ void States::currentStatementPrint()
     cout << setw(15) << "Religion" << setw(1) << " : ";
     Printer(religion);
 }
+bool States::war_validation()
+{
+	return States::Checking_The_States_For_Starting_The_War(money, satisfaction, army);
+}
+void States::spy()
+{
+	States::Print_NameOfCountries();
+	States::Spyinformation();
+}
+void States::ApplyWar(int country)
+{
+	States::Changingstates(country, religion, satisfaction, army, money);
+	currentStatementPrint();
+}
+void States::Show_MnifestedCountries()
+{
+	States::Manifested_countires();
+}
+void States::ShowCountries()
+{
+	Print_NameOfCountries();
+}
