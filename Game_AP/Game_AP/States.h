@@ -1,7 +1,9 @@
 #pragma once
 #include"War.h"
+#include "Trad.h"
 class States:protected War
 {
+friend class Trad; 
 private:
 	int money, satisfaction, religion, army;
     void Printer(int,int = 15);
