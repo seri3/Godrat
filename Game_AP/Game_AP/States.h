@@ -4,7 +4,7 @@
 
 class States:protected War
 {
-friend class Trad; 
+friend class Trade; 
 private:
 	int money, satisfaction, religion, army;
     void Printer(int,int = 15);

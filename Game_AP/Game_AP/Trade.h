@@ -1,5 +1,5 @@
 // #ifdef TRAD_H
-#define TRAD_H
+#define TRADE_H
 
 #include <vector>
 #include "States.h"
@@ -11,11 +11,11 @@ using namespace std;
  * @brief this class is for trad part of game
  * 
  */
-class Trad
+class Trade
 {
 public:
-    Trad();
-    Trad (int , int , int , int , string);
+    Trade();
+    Trade (int , int , int , int , string);
     void fill();
     // void print(string) const;
     //void check_states( States state , Trad countries) const;
@@ -26,7 +26,7 @@ public:
 private:
     int money = 0 , satisfaction = 0, religion = 0, army = 0;
     string name;
-    vector <Trad> country_list;
+    vector <Trade> country_list;
 };
 
 // #endif

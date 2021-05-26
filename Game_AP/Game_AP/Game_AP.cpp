@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
-#include "Trad.h"
+#include "Trade.h"
 using namespace std;
 int main()
 {
@@ -168,7 +168,7 @@ int main()
 		{
 			warStarted = true;
 		}
-		Trad trading;
+		Trade trading;
 		trading.fill();
 		vector<bool> issue = trading.check_states(kingdom);
 		string choosed;
@@ -184,7 +184,7 @@ int main()
 				{
 					trading.print(issue);
 					cout << "print which country do you want:" << endl;
-					label8:
+				label8:
 					cin >> choosed;
 					if (trading.checking_contry_name(choosed))
 					{

@@ -1,13 +1,13 @@
 // #ifdef TRAD_CC
-#define TRAD_CC
+#define TRADE_CC
 
 #include <iostream>
 #include <vector>
-#include "Trad.h"
+#include "Trade.h"
 
 using namespace std;
 
-Trad::Trad(int money, int staisfaction, int religion, int army, string name)
+Trade::Trade(int money, int staisfaction, int religion, int army, string name)
 {
     this->money = money;
     this->army = army;
@@ -16,22 +16,22 @@ Trad::Trad(int money, int staisfaction, int religion, int army, string name)
     this->name = name;
 }
 
-Trad::Trad() {}
+Trade::Trade() {}
 
 //this function fill the country list
-void Trad::fill()
+void Trade::fill()
 {
-    Trad korax(-3, 0, +3, 0, "Korax");
+    Trade korax(-3, 0, +3, 0, "Korax");
     country_list.push_back(korax);
-    Trad Lev(-3, 0, 0, +3, "Lev");
+    Trade Lev(-3, 0, 0, +3, "Lev");
     country_list.push_back(Lev);
-    Trad Zirex(+3, 0, -3, 0, "Zirex");
+    Trade Zirex(+3, 0, -3, 0, "Zirex");
     country_list.push_back(Zirex);
-    Trad Dora(+3, 0, 0, -3, "Dorax");
+    Trade Dora(+3, 0, 0, -3, "Dorax");
 }
 
 //this func creat a vector list then find low states and change the value of the list and pass it to //TODO
-vector<bool> Trad::check_states(States state)
+vector<bool> Trade::check_states(States state)
 {
     //index 0 is for money
     //index 1 is for religion
@@ -56,7 +56,7 @@ vector<bool> Trad::check_states(States state)
  * @param issue 
  * bool vector index0 is for money index1 is for army index3 is religion
  */
-void Trad::print(vector<bool> &issue)
+void Trade::print(vector<bool> &issue)
 {
     cout << "These states are in the risk:" << endl;
     if (issue[0] == true)
@@ -148,7 +148,7 @@ void Trad::print(vector<bool> &issue)
 //customer choose the country and this func apply chenges
 //input1: the name of country cunstomer choosed
 //input2: name of the state object
-void Trad::choosed(string name, States &state)
+void Trade::choosed(string name, States &state)
 {
     for (int i = 0; i < country_list.size(); i++)
     {
@@ -186,7 +186,7 @@ void Trad::choosed(string name, States &state)
         }
     }
 }
-bool Trad::checking_contry_name(string name)
+bool Trade::checking_contry_name(string name)
 {
     for (int i = 0; i < country_list.size(); i++)
     {
