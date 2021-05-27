@@ -8,5 +8,7 @@ private :
 	string question;
 public:
 	Question(int);
+	string get();
+	string set(string);
 };
 

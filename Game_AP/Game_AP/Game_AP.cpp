@@ -1,13 +1,26 @@
-#include "Question.h"
-#include "Answer.h"
-#include "States.h"
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
 #include <vector>
 #include <string>
+#include "Interface.h"
+#include "Answer.h"
+#include "States.h"
 #include "Trade.h"
+
 using namespace std;
+void betryal(Trade &trade , States &war , int index)
+{
+	static int count = 0;
+	vector<vector <int>> list_info = {{1,2,3},{3,3,3}};
+	war.country.push_back(trade.country_list[index].name);
+	war.InformationOfEachCountry.push_back(list_info[count % list_info.size()]);
+	war.chosencountries.push_back(10+count);
+	cout << trade.country_list[index].name <<" country betrayed you, at this time it is your anamy" << endl;
+	war.currentStatementPrint();
+	trade.country_list.erase(trade.country_list.begin() + index);
+	count++;
+}
 int main()
 {
 	vector<int> indexs{0, 1, 2, 3};
@@ -21,7 +34,7 @@ int main()
 	while (true)
 	{
 		int index = rand() % indexs.size();
-		Question q(indexs[index]);
+		Interface q(indexs[index]);
 		Answer ans(indexs[index]);
 		int selected_option;
 		cin >> selected_option;
@@ -173,6 +186,7 @@ int main()
 		//index1:money index2:religion index3:army if one state being risky then it chang it to true
 		vector<bool> issue = trading.check_states(kingdom);
 		string choosed;
+		int index_betryal = 0;
 		bool flag = false;
 		for (int i = 0; i < issue.size(); i++)
 		{
@@ -189,7 +203,11 @@ int main()
 					cin >> choosed;
 					if (trading.checking_contry_name(choosed))
 					{
-						trading.choosed(choosed, kingdom);
+						if(trading.choosed(choosed, kingdom , index_betryal))
+						{
+							cout << "index: " << index_betryal <<endl; //TODO DELETE
+							betryal(trading , kingdom , index_betryal);
+						}
 					}
 					else if (choosed == "quit")
 					{
@@ -213,7 +231,6 @@ int main()
 				break;
 			}
 		}
-
 		indexs.erase(indexs.begin() + index);
 	}
 }

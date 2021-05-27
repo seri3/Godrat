@@ -1,10 +1,11 @@
 #pragma once
 #include"War.h"
-
-
+// #include "Trade.h"
+class Trade;
 class States:protected War
 {
 friend class Trade; 
+friend void betryal(Trade &trade , States &war , int index);
 private:
 	int money, satisfaction, religion, army;
     void Printer(int,int = 15);

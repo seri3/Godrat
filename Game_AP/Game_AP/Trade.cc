@@ -16,12 +16,26 @@ Trade::Trade(int money, int staisfaction, int religion, int army, string name)
     this->name = name;
 }
 
+Trade::Trade(int money, int staisfaction, int religion, int army, string name, int betrayal_capasity)
+{
+    this->money = money;
+    this->army = army;
+    this->satisfaction = staisfaction;
+    this->religion = religion;
+    this->name = name;
+    this->betrayal_capasity = betrayal_capasity;
+}
+
 Trade::Trade() {}
 
-//this function fill the country list
+/**
+ * @brief this function fill the country list
+ * 
+ */
 void Trade::fill()
 {
-    Trade korax(-3, 0, +3, 0, "Korax");
+    //TODO adding country
+    Trade korax(-3, 0, +3, 0, "Korax" , 1);
     country_list.push_back(korax);
     Trade Lev(-3, 0, 0, +3, "Lev");
     country_list.push_back(Lev);
@@ -30,12 +44,14 @@ void Trade::fill()
     Trade Dora(+3, 0, 0, -3, "Dorax");
 }
 
-//this func creat a vector list then find low states and change the value of the list and pass it to //TODO
+/**
+ * @brief this func creat a vector list then find low states and change the value of the list and pass it to 
+ * 
+ * @param state index 0 is for money index 1 is for religion index 2 is for army
+ * @return vector<bool> 
+ */
 vector<bool> Trade::check_states(States state)
 {
-    //index 0 is for money
-    //index 1 is for religion
-    //index 2 is for army
     vector<bool> issue = {false, false, false};
     if (state.money <= 7)
     {
@@ -145,15 +161,35 @@ void Trade::print(vector<bool> &issue)
         issue[2] = false;
     }
 }
-//customer choose the country and this func apply chenges
-//input1: the name of country cunstomer choosed
-//input2: name of the state object
-void Trade::choosed(string name, States &state)
+/**
+ * @brief customer choose the country and this func apply chenges
+ * 
+ * @param name the name of country which cunstomer choosed
+ * @param state name of the state object
+ * @return true when one country betryed
+ */
+bool Trade::choosed(string name, States &state , int& index)
 {
     for (int i = 0; i < country_list.size(); i++)
     {
         if (country_list[i].name == name)
         {
+            if (name == "Korax")
+            {
+                //these countries aren't royal
+                //TODO adding country
+                country_list[i].count_for_betray++;
+                if (country_list[i].count_for_betray == country_list[i].betrayal_capasity)
+                {
+                    country_list[i].money = (country_list[i].money >= 0) ? 0 : country_list[i].money;
+                    country_list[i].religion = (country_list[i].religion >= 0) ? 0 : country_list[i].religion;
+                    country_list[i].army = (country_list[i].army >= 0) ? 0 : country_list[i].army;
+                    state.applyChanges(country_list[i].money, country_list[i].satisfaction, country_list[i].religion, country_list[i].army);
+                    state.currentStatementPrint();
+                    index = i;
+                    return true;
+                }
+            }
             state.applyChanges(country_list[i].money, country_list[i].satisfaction, country_list[i].religion, country_list[i].army);
             state.currentStatementPrint();
             if (country_list[i].money > 1)
@@ -166,11 +202,11 @@ void Trade::choosed(string name, States &state)
             }
             if (country_list[i].religion > 1)
             {
-                country_list[i].religion = country_list[i].religion- 1;
+                country_list[i].religion = country_list[i].religion - 1;
             }
             else if (country_list[i].religion < 0 && country_list[i].religion > -15)
             {
-                country_list[i].religion = country_list[i].religion- 2;
+                country_list[i].religion = country_list[i].religion - 2;
             }
             if (country_list[i].army > 1)
             {
@@ -180,9 +216,18 @@ void Trade::choosed(string name, States &state)
             {
                 country_list[i].army = country_list[i].army - 2;
             }
+            // cout << "size: " << country_list.size() << endl;
         }
     }
+    return false;
 }
+/**
+ * @brief checking the name of country
+ * 
+ * @param name it is name of country the customer input
+ * @return true if the name of country exits in country_list
+ * @return false if it doesn't exist this name in country_list
+ */
 bool Trade::checking_contry_name(string name)
 {
     for (int i = 0; i < country_list.size(); i++)
