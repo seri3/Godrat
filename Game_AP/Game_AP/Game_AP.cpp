@@ -16,6 +16,8 @@ int main()
 	bool warStarted = true;
 	bool ejra = false;
 	int param = 0;
+	Trade trading;
+	trading.fill();
 	while (true)
 	{
 		int index = rand() % indexs.size();
@@ -168,8 +170,7 @@ int main()
 		{
 			warStarted = true;
 		}
-		Trade trading;
-		trading.fill();
+		//index1:money index2:religion index3:army if one state being risky then it chang it to true
 		vector<bool> issue = trading.check_states(kingdom);
 		string choosed;
 		bool flag = false;
@@ -177,7 +178,7 @@ int main()
 		{
 			if (issue[i] == true)
 			{
-				cout << "your states are in risks, do you want to trad with other countries:" << endl;
+				cout << "your states are in risk, do you want to trad with other countries:" << endl;
 			label7:
 				cin >> choosed;
 				if (choosed == "yes")
@@ -189,6 +190,10 @@ int main()
 					if (trading.checking_contry_name(choosed))
 					{
 						trading.choosed(choosed, kingdom);
+					}
+					else if (choosed == "quit")
+					{
+						cout << "ok" << endl;
 					}
 					else
 					{

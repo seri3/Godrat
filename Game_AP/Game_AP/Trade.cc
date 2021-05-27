@@ -58,7 +58,7 @@ vector<bool> Trade::check_states(States state)
  */
 void Trade::print(vector<bool> &issue)
 {
-    cout << "These states are in the risk:" << endl;
+    cout << "These states are in risk:" << endl;
     if (issue[0] == true)
     {
         cout << "money" << endl;
@@ -158,30 +158,27 @@ void Trade::choosed(string name, States &state)
             state.currentStatementPrint();
             if (country_list[i].money > 1)
             {
-                country_list[i].money--;
+                country_list[i].money = country_list[i].money - 1;
             }
             else if (country_list[i].money < 0 && country_list[i].money > -15)
             {
-                country_list[i].money--;
-                country_list[i].money--;
+                country_list[i].money = country_list[i].money - 2;
             }
             if (country_list[i].religion > 1)
             {
-                country_list[i].religion--;
+                country_list[i].religion = country_list[i].religion- 1;
             }
             else if (country_list[i].religion < 0 && country_list[i].religion > -15)
             {
-                country_list[i].religion--;
-                country_list[i].religion--;
+                country_list[i].religion = country_list[i].religion- 2;
             }
             if (country_list[i].army > 1)
             {
-                country_list[i].army--;
+                country_list[i].army = country_list[i].army - 1;
             }
             else if (country_list[i].army < 0 && country_list[i].army > -15)
             {
-                country_list[i].army--;
-                country_list[i].army--;
+                country_list[i].army = country_list[i].army - 2;
             }
         }
     }
@@ -194,9 +191,10 @@ bool Trade::checking_contry_name(string name)
         {
             return true;
         }
-        else
+        else if (i == country_list.size() - 1)
+        {
             return false;
+        }
     }
-    return false;
 }
 // #endif
