@@ -17,7 +17,6 @@ void betryal(Trade &trade , States &war , int index)
 	war.InformationOfEachCountry.push_back(list_info[count % list_info.size()]);
 	war.chosencountries.push_back(10+count);
 	cout << trade.country_list[index].name <<" country betrayed you, at this time it is your anamy" << endl;
-	war.currentStatementPrint();
 	trade.country_list.erase(trade.country_list.begin() + index);
 	count++;
 }
@@ -82,6 +81,7 @@ int main()
 						kingdom.ShowCountries();
 						kingdom.Show_MnifestedCountries();
 						cout << "Now you got 3 choices:\n1.hiring a spy again\n2.attack randomly\n3.quit" << endl;
+						label21:
 						string _answer;
 						cin >> _answer;
 						if (_answer == "1")
@@ -113,6 +113,7 @@ int main()
 						{
 							cerr << "Read the question carefully" << endl;
 						}
+						goto label21;
 					}
 					else if (answer == "skip")
 					{
@@ -205,7 +206,6 @@ int main()
 					{
 						if(trading.choosed(choosed, kingdom , index_betryal))
 						{
-							cout << "index: " << index_betryal <<endl; //TODO DELETE
 							betryal(trading , kingdom , index_betryal);
 						}
 					}
