@@ -1,9 +1,9 @@
 #include <iostream>
-#include<ctime>
-#include<cstdlib>
-#include<vector>
-#include<string>
-#include<iomanip>
+#include <ctime>
+#include <cstdlib>
+#include <vector>
+#include <string>
+#include <iomanip>
 #include <fstream>
 
 using namespace std;
@@ -16,14 +16,14 @@ using namespace std;
 class Tools
 {
 public:
-	void dot_remover(string&);
-	void dash_remover(string&);
+	void dot_remover(string &);
+	void dash_remover(string &);
 };
 //Tools.cpp
 void Tools::dot_remover(string &input)
 {
 	string answer;
-	for (int i = 0;i < input.length();i++)
+	for (int i = 0; i < input.length(); i++)
 	{
 		if (input[i] == '.')
 		{
@@ -35,7 +35,7 @@ void Tools::dot_remover(string &input)
 }
 void Tools::dash_remover(string &input)
 {
-	for (int i = 0;i < input.length();i++)
+	for (int i = 0; i < input.length(); i++)
 	{
 		if (input[i] == '-')
 		{
@@ -45,11 +45,12 @@ void Tools::dash_remover(string &input)
 }
 //Answer.h
 using namespace std;
-class Answer:public Tools
+class Answer : public Tools
 {
 private:
 	string first_answer_option;
 	string second_answer_option;
+
 public:
 	Answer(int);
 };
@@ -71,24 +72,25 @@ Answer::Answer(int index)
 	cout << first_answer_option << '\t' << second_answer_option << endl;
 }
 //Question.h
-class Question:public Tools
+class Question : public Tools
 {
-private :
+private:
 	string question;
+
 public:
 	Question(int);
 	string get();
-	string set(string);
+	void set(string);
 };
 //Question.cpp
-Question::Question(int index){}
+Question::Question(int index) {}
 
 string Question::get()
 {
 	return question;
 }
 
-string Question::set(string question)
+void Question::set(string question)
 {
 	this->question = question;
 }
@@ -98,14 +100,15 @@ class Question;
 class Interface : public Tools
 {
 private:
-    Question * ques;
+	Question *ques;
+
 public:
-    Interface( int );
-    string get();
-    string set(string);
+	Interface(int);
+	string get();
+	void set(string);
 };
 //Interfac.cpp
-Interface::Interface(int index):ques(new Question(index))
+Interface::Interface(int index) : ques(new Question(index))
 {
 	ifstream input("../Questions.txt", ios::in);
 	if (!input)
@@ -113,7 +116,7 @@ Interface::Interface(int index):ques(new Question(index))
 		cerr << "file hasnt opened yet" << endl;
 	}
 	input.seekg(index * 113 + index);
-    string test = ques->get();
+	string test = ques->get();
 	input >> test;
 	input.close();
 	Interface::dash_remover(test);
@@ -125,7 +128,7 @@ string Interface::get()
 	return ques->get();
 }
 
-string Interface::set(string question)
+void Interface::set(string question)
 {
 	ques->set(question);
 }
@@ -133,21 +136,21 @@ string Interface::set(string question)
 class War
 {
 protected:
-	vector<string> country = { "Antarika","Romoa","Caspior","Xendal","Ormino","Wastel","Berlaf","uldiryo","tequnile","Janatabad"};
-	vector<vector<int>> InformationOfEachCountry = { {4,1,5},{3,4,5},{7,6,7},{8,4,3},{6,5,5},{2,5,7},{9,4,8},{4,5,4},{7,3,8},{11,10,10} };//army,people,treasury
-	vector<int> chosencountries = { 0,1,2,3,4,5,6,7,8,9 };
+	vector<string> country = {"Antarika", "Romoa", "Caspior", "Xendal", "Ormino", "Wastel", "Berlaf", "uldiryo", "tequnile", "Janatabad"};
+	vector<vector<int>> InformationOfEachCountry = {{4, 1, 5}, {3, 4, 5}, {7, 6, 7}, {8, 4, 3}, {6, 5, 5}, {2, 5, 7}, {9, 4, 8}, {4, 5, 4}, {7, 3, 8}, {11, 10, 10}}; //army,people,treasury
+	vector<int> chosencountries = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 	vector<int> manifestedcountries;
 	void Print_NameOfCountries();
-	bool Checking_The_States_For_Starting_The_War(int, int, int);//money,satisfaction,army
+	bool Checking_The_States_For_Starting_The_War(int, int, int); //money,satisfaction,army
 	void Spyinformation();
-	void Changingstates(int, int&, int&, int&, int&);//country,religion,satisfaction,army,money
+	void Changingstates(int, int &, int &, int &, int &); //country,religion,satisfaction,army,money
 	void Manifested_countires();
 	int GetNumberOfCountries();
 };
 //War.cpp
 bool War::Checking_The_States_For_Starting_The_War(int money, int satisfaction, int army)
 {
-	if (money >= 2 && satisfaction >= 2 && army >= 2)
+	if (money >= 8 && satisfaction >= 8 && army >= 10)
 	{
 		return true;
 	}
@@ -158,7 +161,7 @@ bool War::Checking_The_States_For_Starting_The_War(int money, int satisfaction, 
 }
 void War::Print_NameOfCountries()
 {
-	for (int i = 0;i < country.size();i++)
+	for (int i = 0; i < country.size(); i++)
 	{
 		cout << i + 1 << '.' << country[i] << "   ";
 		if (i == country.size() - 1)
@@ -174,9 +177,9 @@ void War::Spyinformation()
 	manifestedcountries.push_back(chosencountries[index]);
 	chosencountries.erase(chosencountries.begin() + index);
 }
-void War::Changingstates(int _country, int& religion, int& satisfaction, int& army, int& money)
+void War::Changingstates(int _country, int &religion, int &satisfaction, int &army, int &money)
 {
-	for (int i = 0;i < country.size();i++)
+	for (int i = 0; i < country.size(); i++)
 	{
 		if (i == (_country - 1))
 		{
@@ -186,7 +189,7 @@ void War::Changingstates(int _country, int& religion, int& satisfaction, int& ar
 			religion -= InformationOfEachCountry[i][1] / 3;
 			InformationOfEachCountry.erase(InformationOfEachCountry.begin() + i);
 			country.erase(country.begin() + i);
-			for (int j = 0;j < manifestedcountries.size();j++)
+			for (int j = 0; j < manifestedcountries.size(); j++)
 			{
 				if (manifestedcountries[j] == i)
 				{
@@ -200,11 +203,11 @@ void War::Changingstates(int _country, int& religion, int& satisfaction, int& ar
 }
 void War::Manifested_countires()
 {
-	for (int j = 0;j < manifestedcountries.size();j++)
+	for (int j = 0; j < manifestedcountries.size(); j++)
 	{
 		cout << country[manifestedcountries[j]] << endl;
 		cout << "Army:    [";
-		for (int i = 1;i <= InformationOfEachCountry[manifestedcountries[j]][0];i++)
+		for (int i = 1; i <= InformationOfEachCountry[manifestedcountries[j]][0]; i++)
 		{
 			cout << "=";
 			if (i == InformationOfEachCountry[manifestedcountries[j]][0])
@@ -213,7 +216,7 @@ void War::Manifested_countires()
 			}
 		}
 		cout << "People:  [";
-		for (int i = 1;i <= InformationOfEachCountry[manifestedcountries[j]][1];i++)
+		for (int i = 1; i <= InformationOfEachCountry[manifestedcountries[j]][1]; i++)
 		{
 			cout << "=";
 			if (i == InformationOfEachCountry[manifestedcountries[j]][1])
@@ -222,7 +225,7 @@ void War::Manifested_countires()
 			}
 		}
 		cout << "Treasury:[";
-		for (int i = 1;i <= InformationOfEachCountry[manifestedcountries[j]][2];i++)
+		for (int i = 1; i <= InformationOfEachCountry[manifestedcountries[j]][2]; i++)
 		{
 			cout << "=";
 			if (i == InformationOfEachCountry[manifestedcountries[j]][2])
@@ -238,15 +241,28 @@ int War::GetNumberOfCountries()
 }
 //States.h
 class Trade;
-class States :protected War
+class States : protected War
 {
-	friend ostream& operator<<(ostream& out, States& state);
+	friend ostream &operator<<(ostream &out, States &state);
 	friend class Trade;
-	friend void betryal(Trade& trade, States& war, int index);
+	friend void betryal(Trade &trade, States &war, int index);
+
 private:
 	int money, satisfaction, religion, army;
 	void Printer(int, int = 15);
 	int _year = 0;
+	const int QAChanges[10][2][4] = {
+        {{1, 1, 1, 1}, {0, 7, 0, 0}},
+        {{0, 1, 7, 3}, {0, 1, 3, 7}},
+        {{4, 6, 0, 1}, {7, 1, 0, 6}},
+        {{1, 2, 2, 0}, {6, 7, 7, 3}},
+        {{6, 1, 7, 6}, {0, 8, 0, 0}},
+        {{1, 2, 0, 7}, {7, 8, 0, 2}},
+        {{0, 0, 0, 8}, {7, 6, 6, 1}},
+        {{0, 2, 0, 7}, {0, 7, 0, 2}},
+        {{0, 2, 2, 7}, {0, 6, 6, 0}},
+        {{0, 1, 6, 0}, {6, 6, 6, 6}}};
+
 public:
 	States();
 	void readStatesOfAnswer(int, int);
@@ -308,35 +324,32 @@ void States::applyChanges(int money_changes, int satisfaction_changes, int relig
 	else if (temp < 0)
 		temp = 0;
 	army = temp;
-
 }
 void States::readStatesOfAnswer(int index, int answer_option)
 {
-	ifstream input;
-	int religion_changes, satisfaction_changes, army_changes, money_changes;
-	switch (answer_option)
-	{
-	case 1:
-	{
-		input.open("../States_1.txt", ios::in);
-		break;
-	}
-	case 2:
-	{
-		input.open("../States_2.txt", ios::in);
-		break;
-	}
-	}
-	if (!input)
-	{
-		cerr << "file hasnt opened yet" << endl;
-	}
-	input.seekg(index * 8 + index);
-	input >> religion_changes >> satisfaction_changes >> army_changes >> money_changes;
-	//cout << religion << '\t' << satisfaction << '\t' << army << '\t' << money << endl;
-	applyChanges(converter(money_changes), converter(satisfaction_changes), converter(religion_changes), converter(army_changes));
+    int chn[4];
+    int religion_changes, satisfaction_changes, army_changes, money_changes;
+    switch (answer_option)
+    {
+    case 1:
+    {
+        for (int i = 0; i < 4; i++)
+            chn[i] = QAChanges[index][0][i];
+        break;
+    }
+    case 2:
+    {
+        for (int i = 0; i < 4; i++)
+            chn[i] = QAChanges[index][1][i];
+        break;
+    }
+    }
+
+    applyChanges(converter(chn[3]), converter(chn[1]), converter(chn[0]), converter(chn[2]));
 }
-bool States::reachedZero() {
+
+bool States::reachedZero()
+{
 	if (religion && money && satisfaction && army)
 		return true;
 	return false;
@@ -354,11 +367,11 @@ void States::Printer(int progress, int barWidth)
 			cout << " ";
 	}
 	cout << "] " << (int)(((double)(progress) / (double)(barWidth)) * 100) << "%"
-		<< "   ( " << setw(2) << progress << setw(1) << " / " << barWidth << " )" << endl;
+		 << "   ( " << setw(2) << progress << setw(1) << " / " << barWidth << " )" << endl;
 }
 bool States::IsAliveYet()
 {
-	if (religion < 1 || money < 1 || satisfaction < 1 || army < 1 || religion>14 || money>14 || army>14 || satisfaction>14)
+	if (religion < 1 || money < 1 || satisfaction < 1 || army < 1 || religion > 14 || money > 14 || army > 14 || satisfaction > 14)
 	{
 		return false;
 	}
@@ -390,7 +403,8 @@ void States::currentStatementPrint()
 		}
 		else
 		{
-			cout << "you lost the game!" << endl << "you were in power less than a year" << endl;
+			cout << "you lost the game!" << endl
+				 << "you were in power less than a year" << endl;
 			exit(0);
 		}
 	}
@@ -439,27 +453,29 @@ int States::Year()
  * @brief this class is for trade part in game
  *
  */
- // class War;
+// class War;
 class States;
 class Trade
 {
-    friend void betryal(Trade& trade, States& war, int index);
+	friend void betryal(Trade &trade, States &war, int index);
+
 public:
-    Trade();
-    Trade(int, int, int, int, string);
-    Trade(int, int, int, int, string, int);
-    void fill();
-    //void print(string) const;
-    //void check_states( States state , Trad countries) const;
-    vector<bool> check_states(States state);
-    void print(vector<bool>&);
-    bool choosed(string, States&, int&);
-    bool checking_contry_name(string, vector<bool>);
+	Trade();
+	Trade(int, int, int, int, string);
+	Trade(int, int, int, int, string, int);
+	void fill();
+	//void print(string) const;
+	//void check_states( States state , Trad countries) const;
+	vector<bool> check_states(States state);
+	void print(vector<bool> &);
+	bool choosed(string, States &, int &);
+	bool checking_contry_name(string, vector<bool>);
+
 private:
-    int money = 0, satisfaction = 0, religion = 0, army = 0, count_for_betray = 0;
-    int betrayal_capasity;
-    string name;
-    vector <Trade> country_list;
+	int money = 0, satisfaction = 0, religion = 0, army = 0, count_for_betray = 0;
+	int betrayal_capasity;
+	string name;
+	vector<Trade> country_list;
 };
 //Trad.cpp
 // #ifdef TRAD_CC
@@ -468,21 +484,21 @@ using namespace std;
 
 Trade::Trade(int money, int staisfaction, int religion, int army, string name)
 {
-    this->money = money;
-    this->army = army;
-    this->satisfaction = staisfaction;
-    this->religion = religion;
-    this->name = name;
+	this->money = money;
+	this->army = army;
+	this->satisfaction = staisfaction;
+	this->religion = religion;
+	this->name = name;
 }
 
 Trade::Trade(int money, int staisfaction, int religion, int army, string name, int betrayal_capasity)
 {
-    this->money = money;
-    this->army = army;
-    this->satisfaction = staisfaction;
-    this->religion = religion;
-    this->name = name;
-    this->betrayal_capasity = betrayal_capasity;
+	this->money = money;
+	this->army = army;
+	this->satisfaction = staisfaction;
+	this->religion = religion;
+	this->name = name;
+	this->betrayal_capasity = betrayal_capasity;
 }
 
 Trade::Trade() {}
@@ -493,19 +509,19 @@ Trade::Trade() {}
  */
 void Trade::fill()
 {
-    //TODO be betrayal Korax va Son ezafe kon
-    Trade korax(-3, 0, +3, 0, "Korax", 1);
-    country_list.push_back(korax);
-    Trade Lev(-3, 0, 0, +3, "Lev");
-    country_list.push_back(Lev);
-    Trade Zirex(+3, 0, -3, 0, "Zirex");
-    country_list.push_back(Zirex);
-    Trade Dora(+3, 0, 0, -3, "Dorax");
-    country_list.push_back(Dora);
-    Trade Son(0, 0, 3, -3, "Son", 2);
-    country_list.push_back(Son);
-    Trade Dunck(0, 0, -3, +3, "Dunck");
-    country_list.push_back(Dunck);
+	//TODO be betrayal Korax va Son ezafe kon
+	Trade korax(-3, 0, +3, 0, "Korax", 1);
+	country_list.push_back(korax);
+	Trade Lev(-3, 0, 0, +3, "Lev");
+	country_list.push_back(Lev);
+	Trade Zirex(+3, 0, -3, 0, "Zirex");
+	country_list.push_back(Zirex);
+	Trade Dora(+3, 0, 0, -3, "Dorax");
+	country_list.push_back(Dora);
+	Trade Son(0, 0, 3, -3, "Son", 2);
+	country_list.push_back(Son);
+	Trade Dunck(0, 0, -3, +3, "Dunck");
+	country_list.push_back(Dunck);
 }
 
 /**
@@ -516,122 +532,122 @@ void Trade::fill()
  */
 vector<bool> Trade::check_states(States state)
 {
-    vector<bool> issue = { false, false, false };
-    if (state.money <= 5)
-    {
-        issue[0] = true;
-    }
-    if (state.religion <= 5)
-    {
-        issue[1] = true;
-    }
-    if (state.army <= 5)
-    {
-        issue[2] = true;
-    }
-    return issue;
+	vector<bool> issue = {false, false, false};
+	if (state.money <= 3)
+	{
+		issue[0] = true;
+	}
+	if (state.religion <= 3)
+	{
+		issue[1] = true;
+	}
+	if (state.army <= 3)
+	{
+		issue[2] = true;
+	}
+	return issue;
 }
 /**
  * @brief for printing problemes and solutions. inputs: input1: each index being true it prints the probleme and solution of that state
  * @param issue
  * bool vector index0 is for money index1 is for army index3 is religion
  */
-void Trade::print(vector<bool>& issue)
+void Trade::print(vector<bool> &issue)
 {
-    cout << "These states are in risk:" << endl;
-    if (issue[0] == true)
-    {
-        cout << "money" << endl;
-    }
-    if (issue[1] == true)
-    {
-        cout << "religion" << endl;
-    }
-    if (issue[2] == true)
-    {
-        cout << "army" << endl;
-    }
+	cout << "These states are in risk:" << endl;
+	if (issue[0] == true)
+	{
+		cout << "money" << endl;
+	}
+	if (issue[1] == true)
+	{
+		cout << "religion" << endl;
+	}
+	if (issue[2] == true)
+	{
+		cout << "army" << endl;
+	}
 
-    if (issue[0] == true)
-    {
-        for (int i = 0; i < country_list.size(); i++)
-        {
-            if (country_list[i].money > 0)
-            {
-                cout << country_list[i].name << " county will give you " << country_list[i].money << "$";
+	if (issue[0] == true)
+	{
+		for (int i = 0; i < country_list.size(); i++)
+		{
+			if (country_list[i].money > 0)
+			{
+				cout << country_list[i].name << " county will give you " << country_list[i].money << "$";
 
-                if (country_list[i].army < 0)
-                {
-                    if (country_list[i].army == -1)
-                        cout << " but it wants " << -1 * country_list[i].army << " army" << endl;
-                    else
-                        cout << " but it wants " << -1 * country_list[i].army << " armies" << endl;
-                    //break;
-                }
-                else if (country_list[i].religion < 0)
-                {
-                    if (country_list[i].religion == 1)
-                        cout << " but it will adevrtise its religion " << -1 * country_list[i].religion << " time in your country" << endl;
-                    else
-                        cout << " but it will adevrtise its religion " << -1 * country_list[i].religion << " times in your country" << endl;
-                    //break;
-                }
-            }
-        }
-    }
-    if (issue[1] == true)
-    {
-        for (int i = 0; i < country_list.size(); i++)
-        {
-            if (country_list[i].religion > 0)
-            {
-                if (country_list[i].religion == 1)
-                    cout << country_list[i].name << " county will build " << country_list[i].religion << " mosque";
-                else
-                    cout << country_list[i].name << " county will build " << country_list[i].religion << " mosques";
+				if (country_list[i].army < 0)
+				{
+					if (country_list[i].army == -1)
+						cout << " but it wants " << -1 * country_list[i].army << " army" << endl;
+					else
+						cout << " but it wants " << -1 * country_list[i].army << " armies" << endl;
+					//break;
+				}
+				else if (country_list[i].religion < 0)
+				{
+					if (country_list[i].religion == 1)
+						cout << " but it will adevrtise its religion " << -1 * country_list[i].religion << " time in your country" << endl;
+					else
+						cout << " but it will adevrtise its religion " << -1 * country_list[i].religion << " times in your country" << endl;
+					//break;
+				}
+			}
+		}
+	}
+	if (issue[1] == true)
+	{
+		for (int i = 0; i < country_list.size(); i++)
+		{
+			if (country_list[i].religion > 0)
+			{
+				if (country_list[i].religion == 1)
+					cout << country_list[i].name << " county will build " << country_list[i].religion << " mosque";
+				else
+					cout << country_list[i].name << " county will build " << country_list[i].religion << " mosques";
 
-                if (country_list[i].money < 0)
-                {
-                    cout << " but it wants " << -1 * country_list[i].money << "$" << endl;
-                    //break;
-                }
-                else if (country_list[i].army < 0)
-                {
-                    if (country_list[i].army == -1)
-                        cout << " but it will give you " << -1 * country_list[i].army << " army" << endl;
-                    else
-                        cout << " but it will give you " << -1 * country_list[i].army << " armies" << endl;
-                    //break;
-                }
-            }
-        }
-    }
-    if (issue[2] == true)
-    {
-        for (int i = 0; i < country_list.size(); i++)
-        {
-            if (country_list[i].army > 0)
-            {
-                cout << country_list[i].name << " give you " << country_list[i].army << " army ";
-                if (country_list[i].money < 0)
-                {
-                    cout << " but it wants " << -1 * country_list[i].money << "$" << endl;
-                    //break;
-                }
-                else if (country_list[i].religion < 0)
-                {
-                    if (country_list[i].religion == -1)
-                        cout << " but it will adevrtise its religion" << -1 * country_list[i].religion << "time in your country" << endl;
-                    else
-                        cout << " but it will adevrtise its religion" << -1 * country_list[i].religion << "times in your country" << endl;
-                    //break;
-                }
-            }
-        }
-    }
-    // issue[0] = false;
-    // issue[1] = false;
-    // issue[2] = false;
+				if (country_list[i].money < 0)
+				{
+					cout << " but it wants " << -1 * country_list[i].money << "$" << endl;
+					//break;
+				}
+				else if (country_list[i].army < 0)
+				{
+					if (country_list[i].army == -1)
+						cout << " but it will give you " << -1 * country_list[i].army << " army" << endl;
+					else
+						cout << " but it will give you " << -1 * country_list[i].army << " armies" << endl;
+					//break;
+				}
+			}
+		}
+	}
+	if (issue[2] == true)
+	{
+		for (int i = 0; i < country_list.size(); i++)
+		{
+			if (country_list[i].army > 0)
+			{
+				cout << country_list[i].name << " give you " << country_list[i].army << " army ";
+				if (country_list[i].money < 0)
+				{
+					cout << " but it wants " << -1 * country_list[i].money << "$" << endl;
+					//break;
+				}
+				else if (country_list[i].religion < 0)
+				{
+					if (country_list[i].religion == -1)
+						cout << " but it will adevrtise its religion" << -1 * country_list[i].religion << "time in your country" << endl;
+					else
+						cout << " but it will adevrtise its religion" << -1 * country_list[i].religion << "times in your country" << endl;
+					//break;
+				}
+			}
+		}
+	}
+	// issue[0] = false;
+	// issue[1] = false;
+	// issue[2] = false;
 }
 /**
  * @brief customer choose the country and this func apply chenges
@@ -640,71 +656,71 @@ void Trade::print(vector<bool>& issue)
  * @param state name of the state object
  * @return true when one country betryed
  */
-bool Trade::choosed(string name, States& state, int& index)
+bool Trade::choosed(string name, States &state, int &index)
 {
-    for (int i = 0; i < country_list.size(); i++)
-    {
-        if (country_list[i].name == name)
-        {
-            //these countries aren't royal
-            if (name == "Korax")
-            {
-                country_list[i].count_for_betray++;
-                if (country_list[i].count_for_betray == country_list[i].betrayal_capasity)
-                {
-                    country_list[i].money = (country_list[i].money >= 0) ? 0 : country_list[i].money;
-                    country_list[i].religion = (country_list[i].religion >= 0) ? 0 : country_list[i].religion;
-                    country_list[i].army = (country_list[i].army >= 0) ? 0 : country_list[i].army;
-                    state.applyChanges(country_list[i].money, country_list[i].satisfaction, country_list[i].religion, country_list[i].army);
-                    state.currentStatementPrint();
-                    index = i;
-                    return true;
-                }
-            }
-            if (name == "Son")
-            {
-                country_list[i].count_for_betray++;
-                if (country_list[i].count_for_betray == country_list[i].betrayal_capasity)
-                {
-                    country_list[i].money = (country_list[i].money >= 0) ? 0 : country_list[i].money;
-                    country_list[i].religion = (country_list[i].religion >= 0) ? 0 : country_list[i].religion;
-                    country_list[i].army = (country_list[i].army >= 0) ? 0 : country_list[i].army;
-                    state.applyChanges(country_list[i].money, country_list[i].satisfaction, country_list[i].religion, country_list[i].army);
-                    state.currentStatementPrint();
-                    index = i;
-                    return true;
-                }
-            }
-            state.applyChanges(country_list[i].money, country_list[i].satisfaction, country_list[i].religion, country_list[i].army);
-            state.currentStatementPrint();
-            if (country_list[i].money > 1)
-            {
-                country_list[i].money = country_list[i].money - 1;
-            }
-            else if (country_list[i].money < 0 && country_list[i].money > -15)
-            {
-                country_list[i].money = country_list[i].money - 2;
-            }
-            if (country_list[i].religion > 1)
-            {
-                country_list[i].religion = country_list[i].religion - 1;
-            }
-            else if (country_list[i].religion < 0 && country_list[i].religion > -15)
-            {
-                country_list[i].religion = country_list[i].religion - 2;
-            }
-            if (country_list[i].army > 1)
-            {
-                country_list[i].army = country_list[i].army - 1;
-            }
-            else if (country_list[i].army < 0 && country_list[i].army > -15)
-            {
-                country_list[i].army = country_list[i].army - 2;
-            }
-            // cout << "size: " << country_list.size() << endl;
-        }
-    }
-    return false;
+	for (int i = 0; i < country_list.size(); i++)
+	{
+		if (country_list[i].name == name)
+		{
+			//these countries aren't royal
+			if (name == "Korax")
+			{
+				country_list[i].count_for_betray++;
+				if (country_list[i].count_for_betray == country_list[i].betrayal_capasity)
+				{
+					country_list[i].money = (country_list[i].money >= 0) ? 0 : country_list[i].money;
+					country_list[i].religion = (country_list[i].religion >= 0) ? 0 : country_list[i].religion;
+					country_list[i].army = (country_list[i].army >= 0) ? 0 : country_list[i].army;
+					state.applyChanges(country_list[i].money, country_list[i].satisfaction, country_list[i].religion, country_list[i].army);
+					state.currentStatementPrint();
+					index = i;
+					return true;
+				}
+			}
+			if (name == "Son")
+			{
+				country_list[i].count_for_betray++;
+				if (country_list[i].count_for_betray == country_list[i].betrayal_capasity)
+				{
+					country_list[i].money = (country_list[i].money >= 0) ? 0 : country_list[i].money;
+					country_list[i].religion = (country_list[i].religion >= 0) ? 0 : country_list[i].religion;
+					country_list[i].army = (country_list[i].army >= 0) ? 0 : country_list[i].army;
+					state.applyChanges(country_list[i].money, country_list[i].satisfaction, country_list[i].religion, country_list[i].army);
+					state.currentStatementPrint();
+					index = i;
+					return true;
+				}
+			}
+			state.applyChanges(country_list[i].money, country_list[i].satisfaction, country_list[i].religion, country_list[i].army);
+			state.currentStatementPrint();
+			if (country_list[i].money > 1)
+			{
+				country_list[i].money = country_list[i].money - 1;
+			}
+			else if (country_list[i].money < 0 && country_list[i].money > -15)
+			{
+				country_list[i].money = country_list[i].money - 2;
+			}
+			if (country_list[i].religion > 1)
+			{
+				country_list[i].religion = country_list[i].religion - 1;
+			}
+			else if (country_list[i].religion < 0 && country_list[i].religion > -15)
+			{
+				country_list[i].religion = country_list[i].religion - 2;
+			}
+			if (country_list[i].army > 1)
+			{
+				country_list[i].army = country_list[i].army - 1;
+			}
+			else if (country_list[i].army < 0 && country_list[i].army > -15)
+			{
+				country_list[i].army = country_list[i].army - 2;
+			}
+			// cout << "size: " << country_list.size() << endl;
+		}
+	}
+	return false;
 }
 /**
  * @brief checking the name of country
@@ -715,24 +731,24 @@ bool Trade::choosed(string name, States& state, int& index)
  */
 bool Trade::checking_contry_name(string name, vector<bool> bool_list)
 {
-    for (int i = 0; i < country_list.size(); i++)
-    {
+	for (int i = 0; i < country_list.size(); i++)
+	{
 
-        if (name == country_list[i].name)
-        {
-            if (country_list[i].money > 0 && bool_list[0] == true)
-                return true;
-            if (country_list[i].religion > 0 && bool_list[1] == true)
-                return true;
-            if (country_list[i].army > 0 && bool_list[2] == true)
-                return true;
-            return false;
-        }
-        else if (i == country_list.size() - 1)
-        {
-            return false;
-        }
-    }
+		if (name == country_list[i].name)
+		{
+			if (country_list[i].money > 0 && bool_list[0] == true)
+				return true;
+			if (country_list[i].religion > 0 && bool_list[1] == true)
+				return true;
+			if (country_list[i].army > 0 && bool_list[2] == true)
+				return true;
+			return false;
+		}
+		else if (i == country_list.size() - 1)
+		{
+			return false;
+		}
+	}
 }
 //Game_AP.cpp
 #define ROW 3
@@ -751,10 +767,10 @@ int collect(const int(map)[3][3], int r, int c)
 	// Recurtion to return the maximum gold collected.
 	return map[r][c] + maxPath;
 }
-void betryal(Trade& trade, States& war, int index)
+void betryal(Trade &trade, States &war, int index)
 {
 	static int count = 0;
-	vector<vector <int>> list_info = { {1,2,3},{3,3,3} };
+	vector<vector<int>> list_info = {{1, 2, 3}, {3, 3, 3}};
 	war.country.push_back(trade.country_list[index].name);
 	war.InformationOfEachCountry.push_back(list_info[count % list_info.size()]);
 	war.chosencountries.push_back(10 + count);
@@ -775,7 +791,7 @@ int maxGoldCollected(const int(map)[][3])
 
 	return maxGold;
 }
-ostream& operator<<(ostream& out, States& state)
+ostream &operator<<(ostream &out, States &state)
 {
 
 	out << setw(15) << "Money" << setw(1) << " : ";
@@ -788,14 +804,35 @@ ostream& operator<<(ostream& out, States& state)
 	state.Printer(state.religion);
 	return out;
 }
-template<typename T>
+template <typename T>
 void vazir(T a)
 {
 	cout << a << endl;
 }
 int main()
 {
-	vector<int> indexs{ 0,1,2,3,4,5,6,7,8,9 };
+	vector<int> indexs{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+	Tools tools;
+	vector<string> ques = {"Henry:The-Kingdom-of-the-south-claims-that-you-are-betrothed-to-their-young-princess,declining-may-trigger-a-war",  
+							"Puck:a-great-fire-is-destroying-your-castle-my-lord.............................................................",
+							"The-nun:Give-us-enough-power-to-enforce-the-devine-justice-in-your-country,the-pop-is-ready-to-pay-the-price....", 
+							"Puck:A-new-farming-technique-has-consideably-improved-the-harvest!-What-do-you-want-to-do-with-this-income?.....", 
+							"Puck:A-new-farming-technique-has-consideably-improved-the-harvest!-What-do-you-want-to-do-with-this-income?.....", 
+							"Mat:The-river-drop-is-flooding-a-large-part-of-the-country!-We-need-help-from-church-and-the-army!..............", "This-is-the-coldest-winter-of-the-last-30-years,-after-the-weak-harvest-your-people-are-starving!...............", "Thomas:Hum,,A-young-woman-claims-that-her-son-is-in-fact-your-bastard,-should-we-make-this-problem-disappear?...", "Mat:The-cattle-are-dying-from-an-epidemic-more-and-more-every-day,help-your-farmers-contain-it..................",
+						    "Jest:We-should-organize-a-grand-dinner-for-the-victory-of-the-national-team-in-tournament!......................",
+						    "Thomas:There-was-a-massive-breakout-from-the-prison,-we-need-to-organize-a-search-party........................."};
+	string change_ques;
+	vector<vector<string>> answer = { {"Yes..............","No..............."}, 
+									{"Save-the-treasury","Save-the-garrison"},
+									{"Yes..............","No..............."},
+									{"Lets-share-it....","Its-mine!........"},
+									{"I-will-send-them.","No-help!........."},
+									{"Give-our-supplies","I-can-not-help..."},
+									{"Yes..............","No..............."},
+									{"Ok-help..........","Let-them-die....."},
+									{"Good-idea........","No..............."},
+									{"Organize-it......","No..............."}};
+	vector<string>answ ={};
 	States kingdom;
 	srand(time(NULL));
 	bool warStarted = true;
@@ -813,9 +850,21 @@ int main()
 		//int index = rand() % indexs.size();
 		int index = 0;
 
-		Interface q(indexs[index]);
-		Answer ans(indexs[index]);
-	label0:string selected_option;
+		//Interface q(indexs[index]);
+		change_ques = ques[indexs[index]];
+		tools.dash_remover(change_ques);
+		tools.dot_remover(change_ques);
+		cout << change_ques << endl;
+		//Answer ans(indexs[index]);
+		string changing_ans1 = answer[indexs[index]][0];
+		string changing_ans2 = answer[indexs[index]][1];
+		tools.dash_remover(changing_ans1);
+		tools.dash_remover(changing_ans2);
+		tools.dot_remover(changing_ans1);
+		tools.dot_remover(changing_ans2);
+		cout << changing_ans1 << '\t' << changing_ans2 << endl;
+	label0:
+		string selected_option;
 		cin >> selected_option;
 		if (selected_option == "1" || selected_option == "2")
 		{
@@ -846,23 +895,24 @@ int main()
 		{
 			if (warStarted == false)
 			{
-			label9:cout << "the spy brought you the information do you wanna see that ?" << endl;
+			label9:
+				cout << "the spy brought you the information do you wanna see that ?" << endl;
 				string answer;
 				cin >> answer;
 				if (answer == "yes")
 				{
 					kingdom.spy();
-				label3:cout << "if you wanna attack write the number of country and quit if you wanna leave the current state" << endl;
+				label3:
+					cout << "if you wanna attack write the number of country and quit if you wanna leave the current state" << endl;
 					string _answer;
 					cin >> _answer;
 					bool check = true;
 					if (_answer == "quit")
 					{
-
 					}
 					else
 					{
-						for (int k = 0;k < _answer.size();k++)
+						for (int k = 0; k < _answer.size(); k++)
 						{
 							if (int(_answer[k]) >= 58 || int(_answer[k]) <= 46)
 							{
@@ -904,7 +954,8 @@ int main()
 			{
 				if (ejra)
 				{
-				label4:cout << "you reached the enough power for attacking again \ntype 'ok' for more information or type 'skip' for skipping this state " << endl;
+				label4:
+					cout << "you reached the enough power for attacking again \ntype 'ok' for more information or type 'skip' for skipping this state " << endl;
 					string answer;
 					cin >> answer;
 					if (answer == "ok")
@@ -912,7 +963,8 @@ int main()
 						kingdom.ShowCountries();
 						kingdom.Show_MnifestedCountries();
 						cout << "Now you got 3 choices:\n1.hiring a spy again\n2.attack randomly\n3.quit" << endl;
-					label21:string _answer;
+					label21:
+						string _answer;
 						cin >> _answer;
 						if (_answer == "1")
 						{
@@ -922,10 +974,11 @@ int main()
 						else if (_answer == "2")
 						{
 							cout << "enter the number of country" << endl;
-						label5:string ans;
+						label5:
+							string ans;
 							cin >> ans;
 							bool check = true;
-							for (int k = 0;k < ans.size();k++)
+							for (int k = 0; k < ans.size(); k++)
 							{
 								if (int(ans[k]) >= 58 || int(ans[k]) <= 46)
 								{
@@ -953,7 +1006,6 @@ int main()
 						}
 						else if (_answer == "3")
 						{
-
 						}
 						else
 						{
@@ -963,7 +1015,6 @@ int main()
 					}
 					else if (answer == "skip")
 					{
-
 					}
 					else
 					{
@@ -975,13 +1026,15 @@ int main()
 				{
 					cout << "You got enough power to start the war do you wanna risk it ?!" << endl;
 					ejra = true;
-				label:string answer_war;
+				label:
+					string answer_war;
 					cin >> answer_war;
 					if (answer_war == "Yes" || answer_war == "yes")
 					{
 						kingdom.ShowCountries();
 						cout << "here are the list of countries that can be attacked but there is no information about them you got 3 choices: \n1.you can hire a spy to bring you the inforamtion of these countries\n2.take the risk and choose randomly.\n3.quit" << endl;
-					label2:string answer;
+					label2:
+						string answer;
 						cin >> answer;
 						if (answer == "1")
 						{
@@ -991,10 +1044,11 @@ int main()
 						else if (answer == "2")
 						{
 							cout << "enter the number of country" << endl;
-						label6:string ans;
+						label6:
+							string ans;
 							cin >> ans;
 							bool check = true;
-							for (int k = 0;k < ans.size();k++)
+							for (int k = 0; k < ans.size(); k++)
 							{
 								if (int(ans[k]) >= 58 || int(ans[k]) <= 46)
 								{
@@ -1019,11 +1073,9 @@ int main()
 								cerr << "Enter the correct number" << endl;
 								goto label6;
 							}
-
 						}
 						else if (answer == "3")
 						{
-
 						}
 						else
 						{
@@ -1033,7 +1085,6 @@ int main()
 					}
 					else if (answer_war == "No" || answer_war == "no")
 					{
-
 					}
 					else
 					{
@@ -1093,20 +1144,20 @@ int main()
 				break;
 			}
 		}
-		if (kingdom.getSatisfaction() <= 5)
+		if (kingdom.getSatisfaction() <= 2)
 		{
 
 			int map[3][3] = {
-		{1, 9, 3},
-		{6, 3, 8},
-		{8, 7, 2} };
+				{1, 9, 3},
+				{6, 3, 8},
+				{8, 7, 2}};
 			cout << "here you can see the population of each city of your country. try to increase the satisfaction of your people" << endl;
 			cout << "Capital" << endl
-				<< "|" << endl
-				<< "+--- " << map[0][0] << " --- " << map[0][1] << " --- " << map[0][2] << endl
-				<< "+--- " << map[1][0] << " --- " << map[1][1] << " --- " << map[1][2] << endl
-				<< "+--- " << map[2][0] << " --- " << map[2][1] << " --- " << map[2][2] << endl
-				<< "now choose the best way to catch best result & satisfaction from people." << endl;
+				 << "|" << endl
+				 << "+--- " << map[0][0] << " --- " << map[0][1] << " --- " << map[0][2] << endl
+				 << "+--- " << map[1][0] << " --- " << map[1][1] << " --- " << map[1][2] << endl
+				 << "+--- " << map[2][0] << " --- " << map[2][1] << " --- " << map[2][2] << endl
+				 << "now choose the best way to catch best result & satisfaction from people." << endl;
 			int sum_total = 0, max_sum = maxGoldCollected(map);
 			int m_input[3];
 			do
@@ -1146,7 +1197,4 @@ int main()
 			exit(0);
 		}
 	}
-
 }
-
-

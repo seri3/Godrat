@@ -58,15 +58,15 @@ void Trade::fill()
 vector<bool> Trade::check_states(States state)
 {
     vector<bool> issue = { false, false, false };
-    if (state.money <= 5)
+    if (state.money <= 3)
     {
         issue[0] = true;
     }
-    if (state.religion <= 5)
+    if (state.religion <= 3)
     {
         issue[1] = true;
     }
-    if (state.army <= 5)
+    if (state.army <= 3)
     {
         issue[2] = true;
     }

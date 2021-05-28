@@ -3,7 +3,7 @@
 #include<string>
 bool War::Checking_The_States_For_Starting_The_War(int money, int satisfaction, int army)
 {
-	if (money >= 2 && satisfaction >= 2 && army >= 2)
+	if (money >= 8 && satisfaction >= 8 && army >= 10)
 	{
 		return true;
 	}

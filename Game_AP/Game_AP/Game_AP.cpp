@@ -365,7 +365,7 @@ int main()
 				break;
 			}
 		}
-		if (kingdom.getSatisfaction() <= 5)
+		if (kingdom.getSatisfaction() <= 2)
 		{
 
 			int map[3][3] = {
