@@ -1,4 +1,4 @@
-#include "Question.h"
+#include "Interface.h"
 #include"Answer.h"
 #include "States.h"
 #include <iostream>
@@ -85,7 +85,7 @@ int main()
 		//	exit(0);
 		//}
 		int index = rand() % indexs.size();
-		Question q(indexs[index]);
+		Interface q(indexs[index]);
 		Answer ans(indexs[index]);
 	label0:string selected_option;
 		cin >> selected_option;

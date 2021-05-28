@@ -2,17 +2,14 @@
 #include<iostream>
 #include<fstream>
 using namespace std;
-Question::Question(int index)
+Question::Question(int index){}
+
+string Question::get()
 {
-	ifstream input("../Questions.txt", ios::in);
-	if (!input)
-	{
-		cerr << "file hasnt opened yet" << endl;
-	}
-	input.seekg(index * 113 + index);
-	input >> question;
-	input.close();
-	Question::dash_remover(question);
-	Question::dot_remover(question);
-	cout << question << endl;
+	return question;
+}
+
+string Question::set(string question)
+{
+	this->question = question;
 }
