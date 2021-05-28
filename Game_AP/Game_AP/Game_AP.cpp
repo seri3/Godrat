@@ -408,6 +408,12 @@ int main()
 			} while (1);
 		}
 		indexs.erase(indexs.begin() + index);
+		if (indexs.size() == 0)
+		{
+			cout << "you won" << endl;
+			exit(0);
+		}
+		
 	}
-
+	return 0;
 }

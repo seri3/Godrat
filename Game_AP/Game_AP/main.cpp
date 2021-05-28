@@ -77,9 +77,35 @@ private :
 	string question;
 public:
 	Question(int);
+	string get();
+	string set(string);
 };
 //Question.cpp
-Question::Question(int index)
+Question::Question(int index){}
+
+string Question::get()
+{
+	return question;
+}
+
+string Question::set(string question)
+{
+	this->question = question;
+}
+//Interfac.h
+class Question;
+
+class Interface : public Tools
+{
+private:
+    Question * ques;
+public:
+    Interface( int );
+    string get();
+    string set(string);
+};
+//Interfac.cpp
+Interface::Interface(int index):ques(new Question(index))
 {
 	ifstream input("../Questions.txt", ios::in);
 	if (!input)
@@ -87,11 +113,21 @@ Question::Question(int index)
 		cerr << "file hasnt opened yet" << endl;
 	}
 	input.seekg(index * 113 + index);
-	input >> question;
+    string test = ques->get();
+	input >> test;
 	input.close();
-	Question::dash_remover(question);
-	Question::dot_remover(question);
-	cout << question << endl;
+	Interface::dash_remover(test);
+	Interface::dot_remover(test);
+	cout << test << endl;
+}
+string Interface::get()
+{
+	return ques->get();
+}
+
+string Interface::set(string question)
+{
+	ques->set(question);
 }
 //War.h
 class War
@@ -774,8 +810,10 @@ int main()
 		//	cout << "you lost the game" << endl;
 		//	exit(0);
 		//}
-		int index = rand() % indexs.size();
-		Question q(indexs[index]);
+		//int index = rand() % indexs.size();
+		int index = 0;
+
+		Interface q(indexs[index]);
 		Answer ans(indexs[index]);
 	label0:string selected_option;
 		cin >> selected_option;
@@ -1098,6 +1136,15 @@ int main()
 			} while (1);
 		}
 		indexs.erase(indexs.begin() + index);
+		if (index < indexs.size() - 1)
+		{
+			index++;
+		}
+		else
+		{
+			cout << "you won" << endl;
+			exit(0);
+		}
 	}
 
 }
