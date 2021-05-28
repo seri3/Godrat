@@ -7,6 +7,7 @@
 #include "Answer.h"
 #include "States.h"
 #include "Trade.h"
+#include <unistd.h>
 
 using namespace std;
 void betryal(Trade &trade , States &war , int index)
@@ -16,7 +17,7 @@ void betryal(Trade &trade , States &war , int index)
 	war.country.push_back(trade.country_list[index].name);
 	war.InformationOfEachCountry.push_back(list_info[count % list_info.size()]);
 	war.chosencountries.push_back(10+count);
-	cout << trade.country_list[index].name <<" country betrayed you, at this time it is your anamy" << endl;
+	cout << trade.country_list[index].name <<" country betrayed you, at this time it is your enemy" << endl;
 	trade.country_list.erase(trade.country_list.begin() + index);
 	count++;
 }
@@ -193,7 +194,7 @@ int main()
 		{
 			if (issue[i] == true)
 			{
-				cout << "your states are in risk, do you want to trad with other countries:" << endl;
+				cout << "your states are in risk, do you want to trade with other countries:" << endl;
 			label7:
 				cin >> choosed;
 				if (choosed == "yes")
@@ -202,7 +203,7 @@ int main()
 					cout << "print which country do you want:" << endl;
 				label8:
 					cin >> choosed;
-					if (trading.checking_contry_name(choosed))
+					if (trading.checking_contry_name(choosed , issue))
 					{
 						if(trading.choosed(choosed, kingdom , index_betryal))
 						{

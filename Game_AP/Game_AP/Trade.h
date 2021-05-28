@@ -27,7 +27,7 @@ public:
     vector<bool> check_states( States state );
     void print(vector<bool> &) ;
     bool choosed(string , States& , int &);
-    bool checking_contry_name(string);
+    bool checking_contry_name(string , vector<bool>);
 private:
     int money = 0 , satisfaction = 0, religion = 0, army = 0 , count_for_betray = 0;
     int betrayal_capasity;

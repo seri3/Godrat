@@ -3,7 +3,7 @@
 #include<string>
 bool War::Checking_The_States_For_Starting_The_War(int money, int satisfaction, int army)
 {
-	if (money >= 5 && satisfaction >= 5 && army >= 5)
+	if (money >= 1 && satisfaction >= 1 && army >= 1) //TODO bishtaresh kon
 	{
 		return true;
 	}
