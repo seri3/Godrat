@@ -3,7 +3,7 @@
 #include<string>
 bool War::Checking_The_States_For_Starting_The_War(int money, int satisfaction, int army)
 {
-	if (money >= 5 && satisfaction >= 5 && army >= 5)
+	if (money >= 2 && satisfaction >= 2 && army >= 2)
 	{
 		return true;
 	}
@@ -27,38 +27,7 @@ void War::Print_NameOfCountries()
 void War::Spyinformation()
 {
 	int index = rand() % chosencountries.size();
-	manifestedcountries.push_back(index);
-	for (int j = 0;j < manifestedcountries.size();j++)
-	{
-		cout << country[manifestedcountries[j]] << endl;
-		cout << "Army:    [";
-		for (int i = 1;i <= InformationOfEachCountry[manifestedcountries[j]][0];i++)
-		{
-			cout << "=";
-			if (i == InformationOfEachCountry[manifestedcountries[j]][0])
-			{
-				cout << "]" << endl;
-			}
-		}
-		cout << "People:  [";
-		for (int i = 1;i <= InformationOfEachCountry[manifestedcountries[j]][1];i++)
-		{
-			cout << "=";
-			if (i == InformationOfEachCountry[manifestedcountries[j]][1])
-			{
-				cout << "]" << endl;
-			}
-		}
-		cout << "Treasury:[";
-		for (int i = 1;i <= InformationOfEachCountry[manifestedcountries[j]][2];i++)
-		{
-			cout << "=";
-			if (i == InformationOfEachCountry[manifestedcountries[j]][2])
-			{
-				cout << "]" << endl;
-			}
-		}
-	}
+	manifestedcountries.push_back(chosencountries[index]);
 	chosencountries.erase(chosencountries.begin() + index);
 }
 void War::Changingstates(int _country, int& religion, int& satisfaction, int& army, int& money)
@@ -118,5 +87,9 @@ void War::Manifested_countires()
 			}
 		}
 	}
+}
+int War::GetNumberOfCountries()
+{
+	return country.size();
 }
 

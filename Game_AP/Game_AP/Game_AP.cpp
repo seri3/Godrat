@@ -6,29 +6,119 @@
 #include<cstdlib>
 #include<vector>
 #include<string>
+#include<iomanip>
+#include"Trade.h"
 using namespace std;
+#define ROW 3
+#define CULUMN 3
+int collect(const int(map)[3][3], int r, int c)
+{
+	// Base condition.
+	if ((r < 0) || (r == ROW) || (c == CULUMN))
+		return 0;
+
+	//MOVEMENTS:
+	int upperDiagonal = collect(map, r - 1, c + 1);
+	int straight = collect(map, r, c + 1);
+	int lowerDiagonal = collect(map, r + 1, c + 1);
+	int maxPath = max(max(upperDiagonal, straight), lowerDiagonal);
+	// Recurtion to return the maximum gold collected.
+	return map[r][c] + maxPath;
+}
+void betryal(Trade& trade, States& war, int index)
+{
+	static int count = 0;
+	vector<vector <int>> list_info = { {1,2,3},{3,3,3} };
+	war.country.push_back(trade.country_list[index].name);
+	war.InformationOfEachCountry.push_back(list_info[count % list_info.size()]);
+	war.chosencountries.push_back(10 + count);
+	cout << trade.country_list[index].name << " country betrayed you, at this time it is your enemy" << endl;
+	trade.country_list.erase(trade.country_list.begin() + index);
+	count++;
+}
+int maxGoldCollected(const int(map)[][3])
+{
+	int maxGold = 0;
+
+	//function call for  every row.
+	for (int i = 0; i < ROW; i++)
+	{
+		int goldCollected = collect(map, i, 0);
+		maxGold = max(maxGold, goldCollected);
+	}
+
+	return maxGold;
+}
+ostream& operator<<(ostream& out, States& state)
+{
+
+	out << setw(15) << "Money" << setw(1) << " : ";
+	state.Printer(state.money);
+	out << setw(15) << "Army" << setw(1) << " : ";
+	state.Printer(state.army);
+	out << setw(15) << "Satisfaction" << setw(1) << " : ";
+	state.Printer(state.satisfaction);
+	out << setw(15) << "Religion" << setw(1) << " : ";
+	state.Printer(state.religion);
+	return out;
+}
+template<typename T>
+void vazir(T a)
+{
+	cout << a << endl;
+}
 int main()
 {
-	vector<int> indexs{ 0,1,2,3 };
+	vector<int> indexs{ 0,1,2,3,4,5,6,7,8,9 };
 	States kingdom;
 	srand(time(NULL));
 	bool warStarted = true;
 	bool ejra = false;
-	int param = 0;
+	bool first_time = true;
+	Trade trading;
+	trading.fill();
 	while (true)
 	{
+		//if (!kingdom.reachedZero())
+		//{
+		//	cout << "you lost the game" << endl;
+		//	exit(0);
+		//}
 		int index = rand() % indexs.size();
 		Question q(indexs[index]);
 		Answer ans(indexs[index]);
-		int selected_option;
+	label0:string selected_option;
 		cin >> selected_option;
-		kingdom.readStatesOfAnswer(indexs[index], selected_option);
-		kingdom.currentStatementPrint();
+		if (selected_option == "1" || selected_option == "2")
+		{
+		}
+		else
+		{
+			cerr << "please enter the number of option" << endl;
+			goto label0;
+		}
+		int temp = stoi(selected_option);
+		kingdom.readStatesOfAnswer(indexs[index], temp);
+		if (kingdom.IsAliveYet())
+		{
+			vazir<States>(kingdom);
+			if (!first_time)
+			{
+				cout << kingdom.Year() << " year in power" << endl;
+			}
+			first_time = false;
+		}
+		else
+		{
+			cout << "you lost the game" << endl;
+			cout << "you were " << kingdom.Year() << " year in power" << endl;
+			exit(0);
+		}
 		if (kingdom.war_validation())
 		{
 			if (warStarted == false)
 			{
-				cout << "the spy brought you the information do you wanna see that ?" << endl;
+			label9:cout << "the spy brought you the information do you wanna see that ?" << endl;
 				string answer;
 				cin >> answer;
 				if (answer == "yes")
@@ -37,20 +127,49 @@ int main()
 				label3:cout << "if you wanna attack write the number of country and quit if you wanna leave the current state" << endl;
 					string _answer;
 					cin >> _answer;
+					bool check = true;
 					if (_answer == "quit")
 					{
 
 					}
-					else if (_answer.length() == 1 && int(_answer[0]) < 58 && int(_answer[0]) > 46)
-					{
-						int ans = stoi(_answer);
-						kingdom.ApplyWar(ans);
-					}
 					else
 					{
-						cerr << "Read the question carfully" << endl;
-						goto label3;
+						for (int k = 0;k < _answer.size();k++)
+						{
+							if (int(_answer[k]) >= 58 || int(_answer[k]) <= 46)
+							{
+								check = false;
+							}
+						}
+						if (check)
+						{
+							int _ans = stoi(_answer);
+							if (_ans > kingdom.NumberOfCountries() || _ans <= 0)
+							{
+								cerr << "Enter the correct number" << endl;
+								goto label3;
+							}
+							else
+							{
+								kingdom.ApplyWar(_ans);
+								warStarted = true;
+							}
+						}
+						else
+						{
+							cerr << "Enter the correct number" << endl;
+							goto label3;
+						}
 					}
+				}
+				else if (answer == "no")
+				{
+					kingdom.ApplySpyChanges();
+				}
+				else
+				{
+					cerr << "enter yes for agreement and no for disagreement" << endl;
+					goto label9;
 				}
 			}
 			else
@@ -65,7 +184,7 @@ int main()
 						kingdom.ShowCountries();
 						kingdom.Show_MnifestedCountries();
 						cout << "Now you got 3 choices:\n1.hiring a spy again\n2.attack randomly\n3.quit" << endl;
-						string _answer;
+					label21:string _answer;
 						cin >> _answer;
 						if (_answer == "1")
 						{
@@ -75,12 +194,28 @@ int main()
 						else if (_answer == "2")
 						{
 							cout << "enter the number of country" << endl;
-							label5:string ans;
+						label5:string ans;
 							cin >> ans;
-							if (ans.length() == 1 && int(ans[0]) < 58 && int(ans[0]) > 46)
+							bool check = true;
+							for (int k = 0;k < ans.size();k++)
+							{
+								if (int(ans[k]) >= 58 || int(ans[k]) <= 46)
+								{
+									check = false;
+								}
+							}
+							if (check)
 							{
 								int _ans = stoi(ans);
-								kingdom.ApplyWar(_ans);
+								if (_ans > kingdom.NumberOfCountries() || _ans <= 0)
+								{
+									cerr << "Enter the correct number" << endl;
+									goto label5;
+								}
+								else
+								{
+									kingdom.ApplyWar(_ans);
+								}
 							}
 							else
 							{
@@ -95,6 +230,7 @@ int main()
 						else
 						{
 							cerr << "Read the question carefully" << endl;
+							goto label21;
 						}
 					}
 					else if (answer == "skip")
@@ -129,10 +265,26 @@ int main()
 							cout << "enter the number of country" << endl;
 						label6:string ans;
 							cin >> ans;
-							if (ans.length() == 1 && int(ans[0]) < 58 && int(ans[0]) > 46)
+							bool check = true;
+							for (int k = 0;k < ans.size();k++)
+							{
+								if (int(ans[k]) >= 58 || int(ans[k]) <= 46)
+								{
+									check = false;
+								}
+							}
+							if (check)
 							{
 								int _ans = stoi(ans);
-								kingdom.ApplyWar(_ans);
+								if (_ans > kingdom.NumberOfCountries() || _ans <= 0)
+								{
+									cerr << "Enter the correct number" << endl;
+									goto label6;
+								}
+								else
+								{
+									kingdom.ApplyWar(_ans);
+								}
 							}
 							else
 							{
@@ -166,6 +318,94 @@ int main()
 		else
 		{
 			warStarted = true;
+		}
+		vector<bool> issue = trading.check_states(kingdom);
+		string choosed;
+		int index_betryal = 0;
+		bool flag = false;
+		for (int i = 0; i < issue.size(); i++)
+		{
+			if (issue[i] == true)
+			{
+				cout << "your states are in risk, do you want to trade with other countries:" << endl;
+			label7:
+				cin >> choosed;
+				if (choosed == "yes")
+				{
+					trading.print(issue);
+					cout << "print which country do you want or print 'quit' to leave this state" << endl;
+				label8:
+					cin >> choosed;
+					if (trading.checking_contry_name(choosed, issue))
+					{
+						if (trading.choosed(choosed, kingdom, index_betryal))
+						{
+							betryal(trading, kingdom, index_betryal);
+						}
+					}
+					else if (choosed == "quit")
+					{
+						cout << "ok" << endl;
+					}
+					else
+					{
+						cout << "Wrong name!" << endl;
+						goto label8;
+					}
+				}
+				else if (choosed == "no")
+				{
+					break;
+				}
+				else
+				{
+					cout << "Pleas print yes or no" << endl;
+					goto label7;
+				}
+				break;
+			}
+		}
+		if (kingdom.getSatisfaction() <= 5)
+		{
+
+			int map[3][3] = {
+		{1, 9, 3},
+		{6, 3, 8},
+		{8, 7, 2} };
+			cout << "here you can see the population of each city of your country. try to increase the satisfaction of your people" << endl;
+			cout << "Capital" << endl
+				<< "|" << endl
+				<< "+--- " << map[0][0] << " --- " << map[0][1] << " --- " << map[0][2] << endl
+				<< "+--- " << map[1][0] << " --- " << map[1][1] << " --- " << map[1][2] << endl
+				<< "+--- " << map[2][0] << " --- " << map[2][1] << " --- " << map[2][2] << endl
+				<< "now choose the best way to catch best result & satisfaction from people." << endl;
+			int sum_total = 0, max_sum = maxGoldCollected(map);
+			int m_input[3];
+			do
+			{
+				cin >> m_input[0] >> m_input[1] >> m_input[2];
+				int i = 0, j = 0, k = 0;
+				for (i = 0; i < 3; i++)
+					if (m_input[0] == map[i][0])
+						break;
+				for (j = 0; j < 3; j++)
+					if (m_input[1] == map[j][1])
+						break;
+				for (k = 0; k < 3; k++)
+					if (m_input[2] == map[k][2])
+						break;
+				sum_total = map[i][0] + map[j][1] + map[k][2];
+				if (sum_total == max_sum)
+				{
+					cout << "this made satisfaction of people " << (int)(max_sum / 3) << "more. good job! back to the home." << endl;
+					kingdom.applyChanges(0, (int)(max_sum / 3), 0, 0);
+					kingdom.currentStatementPrint();
+					break;
+				}
+				else if (sum_total != max_sum)
+					cout << "Try Again! maybe not a good choice." << endl;
+
+			} while (1);
 		}
 		indexs.erase(indexs.begin() + index);
 	}
