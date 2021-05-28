@@ -1,6 +1,6 @@
 #pragma once
 #include"War.h"
-#include"Trade.h"
+class Trade;
 class States :protected War
 {
 	friend ostream& operator<<(ostream& out, States& state);
