@@ -1,6 +1,15 @@
 #include "War.h"
 #include<iostream>
 #include<string>
+/**
+ * @brief checking states to say you have enough power
+ * 
+ * @param money 
+ * @param satisfaction 
+ * @param army 
+ * @return true if these states being more than boundry
+ * @return false 
+ */
 bool War::Checking_The_States_For_Starting_The_War(int money, int satisfaction, int army)
 {
 	if (money >= 8 && satisfaction >= 8 && army >= 10)
@@ -12,6 +21,10 @@ bool War::Checking_The_States_For_Starting_The_War(int money, int satisfaction, 
 		return false;
 	}
 }
+/**
+ * @brief printing the list of countries
+ * 
+ */
 void War::Print_NameOfCountries()
 {
 	for (int i = 0;i < country.size();i++)

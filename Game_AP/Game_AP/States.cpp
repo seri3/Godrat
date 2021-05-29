@@ -89,8 +89,8 @@ void States::Printer(int progress, int barWidth)
 		else
 			cout << " ";
 	}
-	cout << "] " << (int)(((double)(progress) / (double)(barWidth)) * 100) << "%"
-		<< "   ( " << setw(2) << progress << setw(1) << " / " << barWidth << " )" << endl;
+	cout << "] " << setw(2) <<(int)(((double)(progress) / (double)(barWidth)) * 100) << setw(1) <<"%"  
+		 <<"   ( " << setw(2) << progress << setw(1) << " / " << barWidth << " )" << endl;
 }
 bool States::IsAliveYet()
 {

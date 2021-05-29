@@ -34,7 +34,6 @@ Trade::Trade() {}
  */
 void Trade::fill()
 {
-    //TODO be betrayal Korax va Son ezafe kon
     Trade korax(-3, 0, +3, 0, "Korax", 1);
     country_list.push_back(korax);
     Trade Lev(-3, 0, 0, +3, "Lev");
@@ -164,7 +163,7 @@ void Trade::print(vector<bool>& issue)
                     if (country_list[i].religion == -1)
                         cout << " but it will adevrtise its religion" << -1 * country_list[i].religion << "time in your country" << endl;
                     else
-                        cout << " but it will adevrtise its religion" << -1 * country_list[i].religion << "times in your country" << endl;
+                        cout << " but it will adevrtise its religion " << -1 * country_list[i].religion << " times in your country" << endl;
                     //break;
                 }
             }

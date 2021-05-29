@@ -254,12 +254,12 @@ private:
 	const int QAChanges[10][2][4] = {
         {{1, 1, 1, 1}, {0, 7, 0, 0}},
         {{0, 1, 7, 3}, {0, 1, 3, 7}},
-        {{4, 6, 0, 1}, {7, 1, 0, 6}},
+        {{0, 2, 0, 7}, {0, 7, 0, 2}},
         {{1, 2, 2, 0}, {6, 7, 7, 3}},
         {{6, 1, 7, 6}, {0, 8, 0, 0}},
         {{1, 2, 0, 7}, {7, 8, 0, 2}},
         {{0, 0, 0, 8}, {7, 6, 6, 1}},
-        {{0, 2, 0, 7}, {0, 7, 0, 2}},
+        {{4, 6, 0, 1}, {7, 1, 0, 6}},
         {{0, 2, 2, 7}, {0, 6, 6, 0}},
         {{0, 1, 6, 0}, {6, 6, 6, 6}}};
 
@@ -815,21 +815,23 @@ int main()
 	Tools tools;
 	vector<string> ques = {"Henry:The-Kingdom-of-the-south-claims-that-you-are-betrothed-to-their-young-princess,declining-may-trigger-a-war",  
 							"Puck:a-great-fire-is-destroying-your-castle-my-lord.............................................................",
+							"Mat:The-cattle-are-dying-from-an-epidemic-more-and-more-every-day,help-your-farmers-contain-it..................",
+							"Puck:A-new-farming-technique-has-consideably-improved-the-harvest!-What-do-you-want-to-do-with-this-income?.....", 
+							"Mat:The-river-drop-is-flooding-a-large-part-of-the-country!-We-need-help-from-church-and-the-army!..............", 
+							"This-is-the-coldest-winter-of-the-last-30-years,-after-the-weak-harvest-your-people-are-starving!...............", 
+							"Thomas:Hum,,A-young-woman-claims-that-her-son-is-in-fact-your-bastard,-should-we-make-this-problem-disappear?...", 
 							"The-nun:Give-us-enough-power-to-enforce-the-devine-justice-in-your-country,the-pop-is-ready-to-pay-the-price....", 
-							"Puck:A-new-farming-technique-has-consideably-improved-the-harvest!-What-do-you-want-to-do-with-this-income?.....", 
-							"Puck:A-new-farming-technique-has-consideably-improved-the-harvest!-What-do-you-want-to-do-with-this-income?.....", 
-							"Mat:The-river-drop-is-flooding-a-large-part-of-the-country!-We-need-help-from-church-and-the-army!..............", "This-is-the-coldest-winter-of-the-last-30-years,-after-the-weak-harvest-your-people-are-starving!...............", "Thomas:Hum,,A-young-woman-claims-that-her-son-is-in-fact-your-bastard,-should-we-make-this-problem-disappear?...", "Mat:The-cattle-are-dying-from-an-epidemic-more-and-more-every-day,help-your-farmers-contain-it..................",
 						    "Jest:We-should-organize-a-grand-dinner-for-the-victory-of-the-national-team-in-tournament!......................",
 						    "Thomas:There-was-a-massive-breakout-from-the-prison,-we-need-to-organize-a-search-party........................."};
 	string change_ques;
 	vector<vector<string>> answer = { {"Yes..............","No..............."}, 
 									{"Save-the-treasury","Save-the-garrison"},
-									{"Yes..............","No..............."},
+									{"Ok-help..........","Let-them-die....."},
 									{"Lets-share-it....","Its-mine!........"},
 									{"I-will-send-them.","No-help!........."},
 									{"Give-our-supplies","I-can-not-help..."},
 									{"Yes..............","No..............."},
-									{"Ok-help..........","Let-them-die....."},
+									{"Yes..............","No..............."},
 									{"Good-idea........","No..............."},
 									{"Organize-it......","No..............."}};
 	vector<string>answ ={};
@@ -1176,7 +1178,7 @@ int main()
 				sum_total = map[i][0] + map[j][1] + map[k][2];
 				if (sum_total == max_sum)
 				{
-					cout << "this made satisfaction of people " << (int)(max_sum / 3) << "more. good job! back to the home." << endl;
+					cout << "this made satisfaction of people " << (int)(max_sum / 3) << " more. good job! back to the home." << endl;
 					kingdom.applyChanges(0, (int)(max_sum / 3), 0, 0);
 					kingdom.currentStatementPrint();
 					break;

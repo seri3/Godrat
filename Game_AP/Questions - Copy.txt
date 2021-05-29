@@ -5,7 +5,7 @@
 "Mat:The-river-drop-is-flooding-a-large-part-of-the-country!-We-need-help-from-church-and-the-army!.............."
 "This-is-the-coldest-winter-of-the-last-30-years,-after-the-weak-harvest-your-people-are-starving!..............."
 "Thomas:Hum,,A-young-woman-claims-that-her-son-is-in-fact-your-bastard,-should-we-make-this-problem-disappear?..."
-"Mat:The-cattle-are-dying-from-an-epidemic-more-and-more-every-day,help-your-farmers-contain-it.................."
-"Jest:We-should-organize-a-grand-dinner-for-the-victory-of-the-national-team-in-tournament!......................"
+"Mat:The-cattle-are-dying-from-an-epidemic-more-and-more-every-day,help-your-farmers-contain-it..................",
+"Jest:We-should-organize-a-grand-dinner-for-the-victory-of-the-national-team-in-tournament!......................",
 "Thomas:There-was-a-massive-breakout-from-the-prison,-we-need-to-organize-a-search-party........................."
 
